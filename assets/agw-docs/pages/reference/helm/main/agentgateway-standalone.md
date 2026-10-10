@@ -1,4 +1,8 @@
 
+## Source Code
+
+* <https://github.com/agentgateway/agentgateway>
+
 ## Values
 
 | Key | Type | Description |
@@ -48,6 +52,10 @@
 | monitoring.extraLabels | object | Additional labels to add to the PodMonitor.<br/><br/>The default value is `{}`. |
 | monitoring.podMonitor.enabled | bool | Create the PodMonitor resource.<br/><br/>The default value is `true`. |
 | monitoring.podMonitor.interval | string | How often Prometheus scrapes the agentgateway proxy's metrics.<br/><br/>The default value is `"15s"`. |
+| monitoring.podMonitor.metricRelabelings | list | Relabeling rules applied to scraped metrics before ingestion    (https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_config).<br/><br/>The default value is `[]`. |
+| monitoring.podMonitor.relabelings | list | Relabeling rules applied to the scrape target before metrics are ingested    (https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config).<br/><br/>The default value is `[]`. |
+| monitoring.podMonitor.scrapeClassicHistograms | bool | Scrape classic (legacy bucket) histograms.<br/><br/>The default value is `true`. |
+| monitoring.podMonitor.scrapeNativeHistograms | bool | Scrape native (exponential, high-resolution) histograms. Requires Prometheus >= v3.8.0.<br/><br/>The default value is `false`. |
 | nameOverride | string | Override the name to the Helm base release, which by default is 'agentgateway-standalone'.<br/><br/>The default value is `""`. |
 | namespaceOverride | string | Install the agentgateway resources in a different namespace than the Helm release namespace.<br/><br/>The default value is `""`. |
 | nodeSelector | object | The node labels that a node must have for the agentgateway proxy pod to be scheduled on it.<br/><br/>The default value is `{}`. |
@@ -55,6 +63,7 @@
 | oidc.enabled | bool | Inject the OIDC cookie secret environment variable. Enable this when configuring OIDC authentication.<br/><br/>The default value is `false`. |
 | podAnnotations | object | Annotations to add to the agentgateway proxy pod. The defaults let Prometheus scrape the proxy's metrics endpoint.<br/><br/>The default value is `{"prometheus.io/path":"/metrics","prometheus.io/port":"15020","prometheus.io/scrape":"true"}`. |
 | podDisruptionBudget | object | podDisruptionBudget allows you to define minimum and maximum available pods during voluntary disruptions.<br/><br/>The default value is `{"enabled":false,"maxUnavailable":"","minAvailable":1,"unhealthyPodEvictionPolicy":""}`. |
+| podDisruptionBudget.maxUnavailable | string | Takes precedence over minAvailable when set to a non-zero number or non-empty string.<br/><br/>The default value is `""`. |
 | podDisruptionBudget.unhealthyPodEvictionPolicy | string | UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction.<br/><br/>The default value is `""`. |
 | podLabels | object | Labels to add to the agentgateway proxy pod.<br/><br/>The default value is `{}`. |
 | podSecurityContext | object | The pod-level security context for the agentgateway proxy pod.<br/><br/>The default value is `{}`. |
@@ -65,5 +74,6 @@
 | serviceAccount.annotations | object | Annotations to add to the service account. Use these annotations to bind a cloud IAM role to the pod, such as 'eks.amazonaws.com/role-arn' for IAM roles for service accounts (IRSA) on Amazon EKS, or 'iam.gke.io/gcp-service-account' for Workload Identity on Google GKE.<br/><br/>The default value is `{}`. |
 | serviceAccount.create | bool | Create a service account for the agentgateway proxy pod. The proxy needs no Kubernetes API permissions, so this service account is only a pod identity, such as for binding a cloud IAM role or attaching image pull secrets. Set to false to use a service account that you manage outside the chart, such as when your cluster policy does not allow Helm releases to create identities, and set 'name' to that service account.<br/><br/>The default value is `true`. |
 | serviceAccount.name | string | The name of the service account. If 'create' is true, this value names the service account that the chart creates, and defaults to the name of the Helm release. If 'create' is false, this value must name a service account that already exists in the release namespace, because the chart does not create one. Note that if 'create' is false and you leave this value unset, the pod runs with the namespace's 'default' service account.<br/><br/>The default value is `""`. |
+| session.secretName | string | The name of an existing secret that has the 'key' entry used for the session key.<br/><br/>The default value is `""`. |
 | strategy | object | Override the Kubernetes Deployment strategy for the agentgateway proxy.<br/><br/>The default value is `{}`. |
 | tolerations | list | The tolerations to apply to the agentgateway proxy pod.<br/><br/>The default value is `[]`. |
