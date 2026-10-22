@@ -1,0 +1,8 @@
+---
+title: agctl standalone delete
+weight: 10
+description: Reference for the `agctl standalone delete` command.
+test: skip
+---
+
+{{< reuse "agw-docs/pages/reference/agctl/main/agctl-standalone-delete.md" >}}
